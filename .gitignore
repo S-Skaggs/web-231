@@ -4,7 +4,7 @@
 
 # Node dependency directories
 node_modules/
-*/ndoe_modules
+*/node_modules
 
 # Optional npm cache directory
 .npm

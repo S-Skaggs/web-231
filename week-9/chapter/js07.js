@@ -49,7 +49,20 @@ function wordCloud(sourceText) {
   sourceText = sourceText.toLowerCase();
   sourceText = sourceText.trim();
 
-  console.log(sourceText);
+  // Leave only alphabet characters and whitespace in the text
+  let alphaRegx = /[^a-zA-Z\s]/g
+  sourceText = sourceText.replace(alphaRegx, "");
+
+  // Remove stop words from teh text
+  for (let i = 0; i < stopWords.length; i++) {
+    let stopRegx = new RegExp("\\b" + stopWords[i] + "\\b", "g");
+    sourceText = sourceText.replace(stopRegx, "");
+  }
+
+  // Place the remaining words in an array
+  let words = sourceText.split(/\s+/g);
+
+  console.log(words);
 }
 
 

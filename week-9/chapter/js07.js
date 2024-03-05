@@ -14,18 +14,42 @@ document.getElementById("getFile").onchange = function() {
   // Retrieve information about the selected file
   let userFile = this.files[0];
 
-  // Read the contents of the selected file
-  let fr = new FileReader();
-  fr.readAsText(userFile);
+  // Verify that a text file is selcted
+  try {
+    let isText = userFile.type.startsWith("text");
+    if(!isText) {
+      throw userFile.name + " is not a text file";
+    }
 
-  // Once the file has finished loading, display in the page
-  let sourceDoc = document.getElementById("wc_document");
-  fr.onload = function() {
-    sourceDoc.innerHTML = fr.result;
+    // Read the contents of the selected file
+    let fr = new FileReader();
+    fr.readAsText(userFile);
 
-    // Store the text of the document, removing HTML tags
-    let sourceText = sourceDoc.textContent;
+    // Once the file has finished loading, display in the page
+    let sourceDoc = document.getElementById("wc_document");
+    fr.onload = function() {
+      sourceDoc.innerHTML = fr.result;
+
+      // Store the text of the document, removing HTML tags
+      let sourceText = sourceDoc.textContent;
+
+      // Generate the WordCloud
+      wordCloud(sourceText);
+    }
   }
+  // Alert the use to select a text file
+  catch(err) {
+    window.alert(err);
+  }
+}
+
+function wordCloud(sourceText) {
+  // Convert the source text to lowercase
+  // and remove leading and trailing whitespace
+  sourceText = sourceText.toLowerCase();
+  sourceText = sourceText.trim();
+
+  console.log(sourceText);
 }
 
 
